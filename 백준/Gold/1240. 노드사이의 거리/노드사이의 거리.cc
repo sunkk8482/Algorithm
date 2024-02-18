@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <utility>
 #include <queue>
 using namespace std;
 
@@ -9,12 +8,12 @@ struct node {
 	int cost;
 };
 
-vector<node> v[1003];
-int dist[1003] = { 0, };
+vector<node> v[1005];
+int dist[1005] = { 0, };
 
 int bfs(int start, int end) {
 	int sum = 0;
-	fill(dist, dist + 1003, -1);
+	fill(dist, dist + 1005, -1);
 	queue<int> q;
 	q.push(start);
 	dist[start] = 0;
