@@ -1,65 +1,59 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-
 using namespace std;
+typedef long long ll;
 
-int arr[100001];
+int par[100001];
 
-struct node {
-	int x1;
-	int x2;
-	int num;
-}v[100001];
+struct tree{
+    int x1, x2, num;
+}arr[100001];
 
-int N, Q;
-bool cmp(const node& a, const node& b) {
+bool cmp (const tree &a, const tree &b){
     return a.x1 < b.x1;
 }
-int find(int tar) {
- 	if (arr[tar] == tar)return tar;
-	int ret = find(arr[tar]);
-	arr[tar] = ret;
-	return ret;
+
+int find(int num){
+    if(num==par[num]) return num;
+    return par[num] = find(par[num]); 
 }
-
-void setUnion(int a, int b) {
-	int t1 = find(a);
-	int t2 = find(b);
-	arr[t1] = t2;
+void unite(int a, int b){
+    int pa=find(a), pb=find(b);
+    par[pa]=pb;
 }
-
-
-int main() {
+int main(){
+    ios_base::sync_with_stdio(false); cin.tie(NULL); 
+    
     int n, q;
     cin >> n >> q;
 
     for (int i = 1; i <= n; i++) {
-        arr[i] = i;
-        cin >> v[i].x1 >> v[i].x2;
-        int y; cin >> y;
-        v[i].num = i;
+        par[i] = i;
+        cin>> arr[i].x1 >> arr[i].x2 ;
+        int y; cin>>y;
+        arr[i].num=i;
     }
-    sort(v + 1, v + n + 1, cmp);
+    sort(arr+1, arr+n+1, cmp);
 
-    int idx = 1, end = v[1].x2;
-    for (int i = 2; i <= n; i++) {
-        if (v[i].x1 <= end) {
-            if (v[i].x2 <= end) setUnion(v[idx].num, v[i].num);
-            else {
-                setUnion(v[idx].num, v[i].num);
-                idx = i, end = v[i].x2;
+    int idx=1, end=arr[1].x2;
+    for(int i=2; i<=n; i++){
+        if(arr[i].x1 <= end){
+            if(arr[i].x2 <= end) unite(arr[idx].num, arr[i].num);
+            else{
+                unite(arr[idx].num, arr[i].num);
+                idx=i, end=arr[i].x2;
             }
         }
-        else {
-            idx = i, end = v[i].x2;
+        else{
+            idx=i, end=arr[i].x2;
         }
     }
 
-    for (int i = 0; i < q; i++) {
-        int a, b; cin >> a >> b;
-        if (find(a) == find(b)) cout << "1\n";
-        else cout << "0\n";
+    for(int i=0; i<q; i++){
+        int a,b; cin>>a>>b;
+        if(find(a)==find(b)) cout<<"1\n";
+        else cout<<"0\n";
     }
     return 0;
 }
