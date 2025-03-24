@@ -15,35 +15,16 @@ unordered_map<string, vector<node>> files;
 unordered_map<string, int> answer;
 
 int n, m;
-int t_cnt, f_cnt;
+
 
 void func(string s) {
 	for (auto i : files[s]) {
-		if (i.type==0) {
-			if (!answer[i.name]) {
-				answer[i.name] = 1;
-				t_cnt++;
-			}
-			f_cnt++;
+		if (i.type == 0) {
+			answer[i.name]++;
 			continue;
 		}
 		func(i.name);
 	}
-}
-
-string tok(string s) {
-	int slash_num = 0;
-	
-	for (auto i : s) {
-		if (i == '/')slash_num++;
-	}
-	if (slash_num == 0)return s;
-	string ret = "";
-	while (slash_num) {
-		ret= s.substr(s.find('/')+1);
-		slash_num--;
-	}
-	return ret;
 }
 
 vector<string> parsing(string s) {
@@ -56,7 +37,6 @@ vector<string> parsing(string s) {
 	}
 	return v;
 }
-
 int main() {
 	cin.tie(0);
 	cout.tie(0);
@@ -79,15 +59,16 @@ int main() {
 	for (int i = 0; i < l; i++) {
 		string d;
 		cin >> d;
-		d = tok(d);
-		vector<string> v = parsing(d);
-		func(v.back());
-		int dif= 0 ;
+		vector<string> s = parsing(d);
+		func(s.back());
+		int dif = 0;
 		int cnt = 0;
-		cout << t_cnt << " " << f_cnt << "\n";
+		for (auto z : answer) {
+			dif++;
+			cnt += z.second;
+		}
+		cout << dif << " " << cnt << "\n";
 		answer.clear();
-		t_cnt = 0;
-		f_cnt = 0;
 	}
 
 }
