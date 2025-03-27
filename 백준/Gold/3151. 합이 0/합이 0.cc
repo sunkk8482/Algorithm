@@ -15,9 +15,12 @@ int main() {
 	}
 	sort(v.begin(), v.end());
  	long long answer = 0;
+	int maxx = v[n - 1];
 	for (int i = 0; i < n - 1; i++) {
 		for (int j = i+1; j < n; j++) { 
 			long long sum = v[i] + v[j];
+			if (sum > 0)continue;
+			if (-sum > maxx)continue;
 			auto low = lower_bound(v.begin() + j+1, v.end(), -sum);
 			auto up = upper_bound(v.begin() + j + 1, v.end(), -sum);
 			if (low == v.end())continue;
