@@ -107,8 +107,8 @@ bool check_separate(int num) {
 }
 
 void remove_field(int num) {
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+	for (int i = 0; i <= N; i++) {
+		for (int j = 0; j <= N; j++) {
 			if (arr[i][j] == num) {
 				arr[i][j] = 0;
 			}
@@ -132,9 +132,10 @@ bool check_avail(int y, int x,int num) {
 	int ver = um[num].vertical;
 	int idx = 0;
 	for (int i = y; i >= y - ver+1; i--) {
-		if (i == 0)return false;;
 		for (int j = x; j <= x + hori-1; j++) {
-			if (j == N)return false;
+			if (i == 0 && um[num].shape[idx]==1)return false;
+			if (j == N && um[num].shape[idx] == 1)return false;
+
 			if (um[num].shape[idx]) {
 				if (temp_arr[i][j] != 0) {
 					return false;
