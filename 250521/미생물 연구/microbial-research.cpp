@@ -46,8 +46,8 @@ void delete_point(int num, int x, int y) {
 }
 
 void add(int x1, int y1, int x2, int y2) {
-	for (int i = N - y1; i >= N - y2 + 1; i--) {
-		for (int j = x1; j <= x2-1; j++) {
+	for (int i = N-y1; i > N - y2 ; i--) {
+		for (int j = x1; j < x2; j++) {
 			if (arr[i][j] != 0) {
 				int num = arr[i][j];
 				delete_point(num, j, i);
